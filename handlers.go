@@ -14,7 +14,6 @@ type todoService struct {
 func (s *todoService) AddTodo(c *gin.Context) {
 	var t userTask
 	if err := c.BindJSON(&t); err != nil {
-		fmt.Printf("c.Error(): %v\n", c.Errors)
 		c.String(400, "Неправильный формат данных.")
 		return
 	}
@@ -41,7 +40,7 @@ func (s *todoService) GetTodo(c *gin.Context) {
 	param := c.Param("id")
 	id, err := strconv.Atoi(param)
 	if err != nil {
-		c.String(404, "Задача не найдена.")
+		c.String(400, "Неправильный формат данных.")
 		return
 	}
 	task, err := s.db.GetTask(id)
@@ -64,7 +63,7 @@ func (s *todoService) UpdateTodo(c *gin.Context) {
 	param := c.Param("id")
 	id, err := strconv.Atoi(param)
 	if err != nil {
-		c.String(404, "Задача не найдена.")
+		c.String(400, "Неправильный формат данных.")
 		return
 	}
 	task, err := s.db.UpdateTask(id, t)
@@ -83,7 +82,7 @@ func (s *todoService) DeleteTodo(c *gin.Context) {
 	param := c.Param("id")
 	id, err := strconv.Atoi(param)
 	if err != nil {
-		c.String(404, "Задача не найдена.")
+		c.String(400, "Неправильный формат данных.")
 		return
 	}
 
